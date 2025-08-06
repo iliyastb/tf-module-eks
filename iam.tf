@@ -1,5 +1,5 @@
 resource "aws_iam_role" "eks-cluster-role" {
-  name = "eks-cluster-${var.ENV}-role"
+  name = "eks-cluster-${var.env}-role"
 
   assume_role_policy = <<POLICY
 {
@@ -29,7 +29,7 @@ resource "aws_iam_role_policy_attachment" "example-AmazonEKSVPCResourceControlle
 }
 
 resource "aws_iam_role" "eks-node-role" {
-  name = "eks-node-${var.ENV}-role"
+  name = "eks-node-${var.env}-role"
 
   assume_role_policy = jsonencode({
     Statement = [{
@@ -60,7 +60,7 @@ resource "aws_iam_role_policy_attachment" "node-AmazonEC2ContainerRegistryReadOn
 
 
 resource "aws_iam_role" "ssm-role-for-pod" {
-  name = "eks-ssm-ps-${var.ENV}-role"
+  name = "eks-ssm-ps-${var.env}-role"
 
   assume_role_policy = <<POLICY
 {
@@ -84,7 +84,7 @@ POLICY
 }
 
 resource "aws_iam_role_policy" "ssm-ps-policy" {
-  name = "eks-${var.ENV}-ssm-ps-policy"
+  name = "eks-${var.env}-ssm-ps-policy"
   role = aws_iam_role.ssm-role-for-pod.id
 
 

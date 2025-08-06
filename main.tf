@@ -1,10 +1,10 @@
 resource "aws_eks_cluster" "eks" {
-  name     = "${var.ENV}-eks-cluster"
+  name     = "${var.env}-eks-cluster"
   role_arn = aws_iam_role.eks-cluster-role.arn
   version  = var.eks_version
 
   vpc_config {
-    subnet_ids = var.PRIVATE_SUBNET_IDS
+    subnet_ids = var.private_subnet_ids
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
@@ -19,14 +19,14 @@ resource "aws_eks_node_group" "node-group" {
   cluster_name    = aws_eks_cluster.eks.name
   node_group_name = "tf-nodes-spot"
   node_role_arn   = aws_iam_role.eks-node-role.arn
-  subnet_ids      = var.PRIVATE_SUBNET_IDS
+  subnet_ids      = var.private_subnet_ids
   capacity_type   = "SPOT"
   instance_types  = ["t3.xlarge"]
 
   scaling_config {
-    desired_size = var.DESIRED_SIZE
-    max_size     = var.MAX_SIZE
-    min_size     = var.MIN_SIZE
+    desired_size = var.desired_size
+    max_size     = var.max_size
+    min_size     = var.min_size
   }
 
   depends_on = [
